@@ -64,7 +64,7 @@ def post_on_insta(image_url, caption):
     body = {'creation_id': container_id, 'access_token': graph_fb_insta_api_token}
     resp = requests.post(graph_insta_media_publish_container_url, json=body)
 
-    print(resp.json())
+    # print(resp.json())
     print(caption)
 
 
@@ -80,13 +80,13 @@ while True:
         lastStyleUsed = 1 if jsonFile['lastStyleUsed'] == 0 else 0
 
         prompt = jsonFile['styles']['style' + str(lastStyleUsed)]
-        print('prompt')
-        print(prompt)
+        # print('prompt')
+        # print(prompt)
 
     try:
         words = generate_words(prompt["prompt_what_i_want"] + " " + prompt["prompt_image_object"])
-        print('words')
-        print(words)
+        # print('words')
+        # print(words)
 
         caption = caption + translate_words(words)
 
@@ -100,6 +100,7 @@ while True:
         # print('caption')
         # print(caption)
         imageUrl = generate_image(words + " " + prompt["prompt_image_extras"])
+        print(imageUrl)
 
     except Exception as error:
         print("Errore:\n" + str(error))
@@ -107,10 +108,10 @@ while True:
     else:
         jsonFile['lastStyleUsed'] = 1 if jsonFile['lastStyleUsed'] == 0 else 0
 
-        print("Ultima pubblicazione: ")
-        print(jsonFile['lastTimePublish'])
-        print("ora attuale")
-        print(time)
+        # print("Ultima pubblicazione: ")
+        # print(jsonFile['lastTimePublish'])
+        # print("ora attuale")
+        # print(time)
 
         if jsonFile['lastTimePublish'] == 0 and 14 <= time <= 16:
             jsonFile['lastTimePublish'] = 1
@@ -127,6 +128,5 @@ while True:
         f = open("lastStyleUsed.json", "w")
         f.write(json.dumps(jsonFile))
         f.close()
-        # post_on_insta(imageUrl, caption)
 
 time.sleep(10800)
