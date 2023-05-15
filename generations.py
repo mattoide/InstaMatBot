@@ -72,7 +72,7 @@ def post_on_insta(image_url, caption):
 
 while True:
 
-    time = dt.datetime.now().hour
+    hour = dt.datetime.now().hour
     # time = 15
 
     with open('lastStyleUsed.json') as f:
@@ -113,15 +113,15 @@ while True:
         # print("ora attuale")
         # print(time)
 
-        if jsonFile['lastTimePublish'] == 0 and 14 <= time <= 16:
+        if jsonFile['lastTimePublish'] == 0 and 14 <= hour <= 16:
             jsonFile['lastTimePublish'] = 1
             post_on_insta(imageUrl, caption)
 
-        if jsonFile['lastTimePublish'] == 1 and 20 <= time <= 22:
+        if jsonFile['lastTimePublish'] == 1 and 20 <= hour <= 22:
             jsonFile['lastTimePublish'] = 2
             post_on_insta(imageUrl, caption)
 
-        if jsonFile['lastTimePublish'] == 2 and 9 <= time <= 11:
+        if jsonFile['lastTimePublish'] == 2 and 9 <= hour <= 11:
             jsonFile['lastTimePublish'] = 0
             post_on_insta(imageUrl, caption)
 
@@ -129,4 +129,4 @@ while True:
         f.write(json.dumps(jsonFile))
         f.close()
 
-time.sleep(10800)
+    time.sleep(10800)
