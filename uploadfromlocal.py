@@ -140,6 +140,7 @@ def image_to_post(url, p_table, p_folder):
         if row:
             name = row[1]
             img_url = url_raw_contents + p_folder + name
+            logging.debug("Url immagine: " + img_url)
             posted = post_on_insta(img_url, caption)
             if posted == 1:
                 cursor.execute("UPDATE " + p_table + " SET posted = ? WHERE name = ?", (True, name))
