@@ -9,7 +9,7 @@ import datetime as dt
 from bs4 import BeautifulSoup
 import sqlite3
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
 graph_fb_insta_api_token = os.getenv('graph_fb_insta_api_token')
@@ -32,15 +32,15 @@ happy_img_url = "https://github.com/mattoide/mattoide.github.io/tree/master/imag
 
 
 def post_on_insta(image_url, caption):
-    # body = {'image_url': image_url, 'caption': caption, 'access_token': graph_fb_insta_api_token}
-    # resp = requests.post(graph_insta_media_container_url, json=body)
-    #
-    # container_id = resp.json()['id']
-    #
-    # body = {'creation_id': container_id, 'access_token': graph_fb_insta_api_token}
-    # resp = requests.post(graph_insta_media_publish_container_url, json=body)
-    #
-    # logging.info(resp.json())
+    body = {'image_url': image_url, 'caption': caption, 'access_token': graph_fb_insta_api_token}
+    resp = requests.post(graph_insta_media_container_url, json=body)
+
+    container_id = resp.json()['id']
+
+    body = {'creation_id': container_id, 'access_token': graph_fb_insta_api_token}
+    resp = requests.post(graph_insta_media_publish_container_url, json=body)
+
+    logging.info(resp.json())
 
     logging.debug("Caption immagine: \n" + caption)
     logging.debug("Url immagine: \n" + image_url)
@@ -121,7 +121,6 @@ def image_to_post(url, p_table, p_folder):
 
                 href = href.split("/")
                 href = href[len(href) - 1]
-
 
                 cursor = conn.cursor()
 
