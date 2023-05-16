@@ -188,4 +188,4 @@ while True:
     else:
         logging.info("Fuori orario per postare")
 
-    time.sleep(10)
+    time.sleep(3600)
