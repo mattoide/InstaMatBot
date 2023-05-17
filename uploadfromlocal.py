@@ -95,6 +95,15 @@ def is_time_to_post():
         f.close()
         return time_to_post
 
+def create_caption(name):
+    caption = name
+    caption = name.replace("_", " #")
+    caption = caption.replace("/mattoide/mattoide.github.io/master/images/sad/", "")
+    caption = caption.replace("/mattoide/mattoide.github.io/master/images/happy/", "")
+    caption = caption.replace(".png", "")
+    caption = caption_base + caption_hashtags + caption
+    return caption
+
 
 def image_to_post(url, p_table, p_folder):
 
@@ -113,11 +122,7 @@ def image_to_post(url, p_table, p_folder):
             href = link.get('href')
             if ".png" in href:
                 href = href.replace("blob/", "")
-                caption = href.replace("_", " #")
-                caption = caption.replace("/mattoide/mattoide.github.io/master/images/sad/", "")
-                caption = caption.replace("/mattoide/mattoide.github.io/master/images/happy/", "")
-                caption = caption.replace(".png", "")
-                caption = caption_base + caption_hashtags + caption
+
 
                 href = href.split("/")
                 href = href[len(href) - 1]
@@ -140,6 +145,7 @@ def image_to_post(url, p_table, p_folder):
         if row:
             name = row[1]
             img_url = url_raw_contents + p_folder + name
+            caption = create_caption(name)
             logging.debug("Url immagine: " + img_url)
             posted = post_on_insta(img_url, caption)
             if posted == 1:
