@@ -3,4 +3,4 @@ import time
 
 while True:
     post_from_local()
-    time.sleep(10)
+    time.sleep(4000)
