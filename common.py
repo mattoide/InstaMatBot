@@ -35,13 +35,11 @@ graph_insta_base_url = "https://graph.facebook.com/v16.0/"
 graph_insta_media_container_url = graph_insta_base_url + insta_account_id + "/media"
 graph_insta_media_publish_container_url = graph_insta_base_url + insta_account_id + "/media_publish"
 
-caption_base = "#openai chatgpt dalle2 intelligenzaartificiale ia ai "
-
 
 def post_on_insta(image_url, caption):
     body = {'image_url': image_url, 'caption': caption, 'access_token': graph_fb_insta_api_token}
     resp = requests.post(graph_insta_media_container_url, json=body)
-
+    print(resp.json())
     container_id = resp.json()['id']
 
     body = {'creation_id': container_id, 'access_token': graph_fb_insta_api_token}
