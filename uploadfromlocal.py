@@ -27,8 +27,6 @@ def what_post():
 
 def is_time_to_post():
     hour = dt.datetime.now().hour
-    hour = 10
-
     logging.debug("Sono le: " + str(hour))
 
     with open('lastStyleUsed.json') as f:
