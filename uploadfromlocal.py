@@ -12,12 +12,6 @@ from common import post_on_insta, log_level, sad_image_foler, sad_img_url, happy
 logging.basicConfig(level=log_level)
 
 
-
-
-
-
-
-
 def what_post():
     with open('lastStyleUsed.json') as f:
         json_file = json.load(f)
@@ -97,6 +91,7 @@ def image_to_post(url, p_table, p_folder):
             img_url = url_raw_contents + p_folder + name
             caption = create_caption(name)
             logging.debug("Url immagine: " + img_url)
+            logging.debug("Caption immagine: " + caption)
             posted = post_on_insta(img_url, caption)
             if posted == 1:
                 cursor.execute("UPDATE " + p_table + " SET posted = ? WHERE name = ?", (True, name))
