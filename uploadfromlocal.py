@@ -92,6 +92,8 @@ def image_to_post(url, p_table, p_folder):
             caption = create_caption(name)
             logging.debug("Url immagine: " + img_url)
             logging.debug("Caption immagine: " + caption)
+            logging.info("Image url:")
+            logging.info(img_url)
             posted = post_on_insta(img_url, caption)
             if posted == 1:
                 cursor.execute("UPDATE " + p_table + " SET posted = ? WHERE name = ?", (True, name))
