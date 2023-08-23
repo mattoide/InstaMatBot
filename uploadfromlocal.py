@@ -52,6 +52,8 @@ def create_caption(name):
 
 
 def image_to_post(url, p_table, p_folder):
+
+    cursor = conn.cursor()
     response = requests.get(url)
 
     img_url = ""
@@ -71,7 +73,7 @@ def image_to_post(url, p_table, p_folder):
                 href = href.split("/")
                 href = href[len(href) - 1]
 
-                cursor = conn.cursor()
+                # cursor = conn.cursor()
 
                 cursor.execute("SELECT * FROM " + p_table + " WHERE name = ?", (href,))
                 row = cursor.fetchone()
