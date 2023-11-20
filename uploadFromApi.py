@@ -1,14 +1,7 @@
 import logging
-import os
-from dotenv import load_dotenv
 import random
 from openai import OpenAI
-import os
-
-import time
 import json
-import requests
-import datetime as dt
 from common import post_on_insta, log_level, caption_base, caption_hashtags
 
 logging.basicConfig(level=log_level)
@@ -21,7 +14,7 @@ def generate_words(prompt):
     logging.debug("Temperature:")
     logging.debug(str(temp))
 
-    completions = client.completions.create(model="text-davinci-003",
+    completions = client.completions.create(model="gpt-3.5-turbo-instruct",
     prompt=prompt,
     max_tokens=2020,
     n=1,
@@ -32,20 +25,23 @@ def generate_words(prompt):
 
 
 def translate_words(prompt):
-    completions = client.completions.create(engine="text-davinci-003",
+    completions = client.completions.create(
+    model="gpt-3.5-turbo-instruct",
     prompt="traduci in inglese " + prompt,
     max_tokens=2020,
     n=1,
-    stop=None)
+    stop=None
+    )
 
     return completions.choices[0].text
 
 
 def generate_image(words):
+    return
     response = client.images.generate(prompt=words,
     n=1,
     size="1024x1024")
-
+    logging.debug(response)
     return response['data'][0]['url']
 
 
@@ -71,6 +67,15 @@ def post_from_api():
         caption = caption.split()
         caption = " #".join(caption)
         caption = caption_base + caption_hashtags + caption
+
+        logging.debug("caption")
+        logging.debug(caption)
+
+        logging.debug("words")
+        logging.debug(words)
+
+        logging.debug("prompt[prompt_image_extras]")
+        logging.debug(prompt["prompt_image_extras"])
 
         image_url = generate_image(words + " " + prompt["prompt_image_extras"])
         logging.debug(image_url)

@@ -2,11 +2,11 @@ import json
 import datetime as dt
 import logging
 import requests
-import openai
 from dotenv import load_dotenv
 import os
 
-log_level = logging.INFO
+log_level = logging.DEBUG
+
 
 load_dotenv()
 graph_fb_insta_api_token = os.getenv('graph_fb_insta_api_token')
