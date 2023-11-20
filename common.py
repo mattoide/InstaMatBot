@@ -27,7 +27,7 @@ happy_image_foler = "/mattoide/mattoide.github.io/master/images/happy/"
 sad_img_url = "https://github.com/mattoide/mattoide.github.io/tree/master/images/sad/"
 happy_img_url = "https://github.com/mattoide/mattoide.github.io/tree/master/images/happy/"
 
-openai.api_key = os.getenv('openai_api_token')
+
 graph_fb_insta_api_token = os.getenv('graph_fb_insta_api_token')
 insta_account_id = os.getenv('insta_account_id')
 

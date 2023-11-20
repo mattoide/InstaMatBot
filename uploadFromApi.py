@@ -2,7 +2,9 @@ import logging
 import os
 from dotenv import load_dotenv
 import random
-import openai
+from openai import OpenAI
+import os
+
 import time
 import json
 import requests
@@ -11,6 +13,7 @@ from common import post_on_insta, log_level, caption_base, caption_hashtags
 
 logging.basicConfig(level=log_level)
 
+client = OpenAI()
 
 def generate_words(prompt):
     temp = random.uniform(0.5, 2.0)
@@ -18,36 +21,31 @@ def generate_words(prompt):
     logging.debug("Temperature:")
     logging.debug(str(temp))
 
-    completions = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=2020,
-        n=1,
-        stop=None,
-        temperature=temp
-    )
+    completions = client.completions.create(model="text-davinci-003",
+    prompt=prompt,
+    max_tokens=2020,
+    n=1,
+    stop=None,
+    temperature=temp)
 
     return completions.choices[0].text
 
 
 def translate_words(prompt):
-    completions = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt="traduci in inglese " + prompt,
-        max_tokens=2020,
-        n=1,
-        stop=None
-    )
+    completions = client.completions.create(engine="text-davinci-003",
+    prompt="traduci in inglese " + prompt,
+    max_tokens=2020,
+    n=1,
+    stop=None)
 
     return completions.choices[0].text
 
 
 def generate_image(words):
-    response = openai.Image.create(
-        prompt=words,
-        n=1,
-        size="1024x1024"
-    )
+    response = client.images.generate(prompt=words,
+    n=1,
+    size="1024x1024")
+
     return response['data'][0]['url']
 
 
