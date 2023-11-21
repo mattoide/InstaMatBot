@@ -27,7 +27,7 @@ def generate_words(prompt):
 def translate_words(prompt):
     completions = client.completions.create(
     model="gpt-3.5-turbo-instruct",
-    prompt="traduci in inglese " + prompt,
+    prompt="traduci solo in inglese le seguenti parole massimo 10 parole" + prompt,
     max_tokens=2020,
     n=1,
     stop=None
@@ -37,12 +37,18 @@ def translate_words(prompt):
 
 
 def generate_image(words):
-    return
-    response = client.images.generate(prompt=words,
-    n=1,
-    size="1024x1024")
+
+    response = client.images.generate(
+        model="dall-e-3",
+        prompt=words,
+        n=1,
+        size="1024x1024",
+        quality="standard"
+    )
+
     logging.debug(response)
-    return response['data'][0]['url']
+
+    return response.data[0].url
 
 
 def post_from_api():
@@ -59,7 +65,7 @@ def post_from_api():
         logging.debug('Parole generate: ')
         logging.debug(words)
 
-        caption = caption_base + translate_words(words)
+        caption = translate_words(words)
 
         caption = caption + " " + words
         caption = caption.replace(".", ",")
@@ -71,11 +77,13 @@ def post_from_api():
         logging.debug("caption")
         logging.debug(caption)
 
+
         logging.debug("words")
         logging.debug(words)
 
         logging.debug("prompt[prompt_image_extras]")
         logging.debug(prompt["prompt_image_extras"])
+
 
         image_url = generate_image(words + " " + prompt["prompt_image_extras"])
         logging.debug(image_url)
@@ -85,3 +93,5 @@ def post_from_api():
 
     else:
         post_on_insta(image_url, caption)
+
+post_from_api()

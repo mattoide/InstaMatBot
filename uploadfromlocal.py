@@ -38,7 +38,7 @@ def is_time_to_post():
             time_to_post = True
 
         f.close()
-        return time_to_post
+        return True
 
 
 def create_caption(name):
