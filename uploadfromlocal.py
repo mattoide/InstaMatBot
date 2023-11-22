@@ -60,20 +60,11 @@ def image_to_post(url, p_table, p_folder):
 
     if response.status_code == 200:
 
-        html = response.text
-        soup = BeautifulSoup(html, 'html.parser')
+        html = response.json()
 
-        links = soup.find_all('a')
-
-        for link in links:
-            href = link.get('href')
+        for link in html['payload']['tree']['items']:
+            href = link['name']
             if ".png" in href:
-                href = href.replace("blob/", "")
-
-                href = href.split("/")
-                href = href[len(href) - 1]
-
-                # cursor = conn.cursor()
 
                 cursor.execute("SELECT * FROM " + p_table + " WHERE name = ?", (href,))
                 row = cursor.fetchone()
