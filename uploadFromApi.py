@@ -93,5 +93,3 @@ def post_from_api():
 
     else:
         post_on_insta(image_url, caption)
-
-post_from_api()
