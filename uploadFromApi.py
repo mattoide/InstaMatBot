@@ -86,6 +86,8 @@ def post_from_api():
 
 
         image_url = generate_image(words + " " + prompt["prompt_image_extras"])
+        print("Image url")
+        print(image_url)
         logging.debug(image_url)
 
     except Exception as error:
