@@ -5,7 +5,7 @@ import requests
 from dotenv import load_dotenv
 import os
 
-log_level = logging.INFO
+log_level = logging.DEBUG
 
 
 load_dotenv()

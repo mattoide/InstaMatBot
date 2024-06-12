@@ -56,14 +56,26 @@ def image_to_post(url, p_table, p_folder):
     cursor = conn.cursor()
     response = requests.get(url)
 
+    soup = BeautifulSoup(response.text, 'lxml')
+
+    data = {}
+
+    # Estrarre tutti i link
+    links = [{'href': a['href'], 'text': a.text} for a in soup.find_all('a', href=True)]
+    data['links'] = links
+
+    json_data = json.dumps(data, indent=4)
+
     img_url = ""
 
     if response.status_code == 200:
 
-        html = response.json()
+        html = json.loads(json_data)
+        logging.debug(html)
 
-        for link in html['payload']['tree']['items']:
-            href = link['name']
+        for link in html['links']:
+
+            href = link['text']
             if ".png" in href:
 
                 cursor.execute("SELECT * FROM " + p_table + " WHERE name = ?", (href,))

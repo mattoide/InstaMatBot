@@ -26,13 +26,27 @@ def generate_words(prompt):
 
 def translate_words(prompt):
     completions = client.completions.create(
-    model="gpt-3.5-turbo-instruct",
-    prompt="traduci solo in inglese le seguenti parole massimo 10 parole" + prompt,
-    max_tokens=2020,
-    n=1,
-    stop=None
+        model="gpt-3.5-turbo-instruct",
+        prompt="traduci solo in inglese le seguenti parole massimo 10 parole" + prompt,
+        max_tokens=2020,
+        n=1,
+        stop=None
     )
 
+    return completions.choices[0].text
+
+
+def reduce_hashtags_to_25(hashtags):
+    completions = client.completions.create(
+        model="gpt-3.5-turbo-instruct",
+        prompt=hashtags + " riduci questi tag a 2",
+        max_tokens=2020,
+        n=1,
+        stop=None
+    )
+    logging.debug("DIOCANE")
+    logging.debug(hashtags)
+    logging.debug(completions.choices[0].text)
     return completions.choices[0].text
 
 
@@ -65,6 +79,8 @@ def post_from_api():
         logging.debug('Parole generate: ')
         logging.debug(words)
 
+
+
         caption = translate_words(words)
 
         caption = caption + " " + words
@@ -72,17 +88,33 @@ def post_from_api():
         caption = caption.replace(",", " ")
         caption = caption.split()
         caption = " #".join(caption)
+
+        logging.debug('CAPITON LE PRIMA:')
+        logging.debug(len(caption.split(' ')))
+        logging.debug(caption)
+
+        # if len(caption.split(' ')) > 4:
+        #     caption = reduce_hashtags_to_25(caption)
+
+
+        logging.debug('CAPITON LE DOPO:')
+        logging.debug(len(caption.split(' ')))
+        logging.debug(caption)
+
+
         caption = caption_base + caption_hashtags + caption
 
         logging.debug("caption")
         logging.debug(caption)
-
+        logging.debug('caption lengh')
+        logging.debug(len(caption))
 
         logging.debug("words")
         logging.debug(words)
 
         logging.debug("prompt[prompt_image_extras]")
         logging.debug(prompt["prompt_image_extras"])
+        return
 
 
         image_url = generate_image(words + " " + prompt["prompt_image_extras"])
