@@ -114,8 +114,6 @@ def post_from_api():
 
         logging.debug("prompt[prompt_image_extras]")
         logging.debug(prompt["prompt_image_extras"])
-        return
-
 
         image_url = generate_image(words + " " + prompt["prompt_image_extras"])
         print("Image url")
